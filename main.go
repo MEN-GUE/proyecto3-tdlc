@@ -27,8 +27,13 @@ func main() {
 	mostrarMaquina(maquina)
 
 	fmt.Println("Cadenas a simular:")
-	for _, c := range conf.Cadenas {
-		fmt.Println("  " + c)
+	for _, cadena := range conf.Cadenas {
+		if err := maquina.revisarCadena(cadena); err != nil {
+			fmt.Printf("  %s: no se puede simular, %v\n", cadena, err)
+			continue
+		}
+		cinta := nuevaCinta(cadena)
+		fmt.Printf("  %s: %s\n", cadena, cinta.descripcion(maquina.Inicial, ""))
 	}
 }
 

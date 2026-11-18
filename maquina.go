@@ -106,6 +106,15 @@ func construirMaquina(conf *Configuracion) (*Maquina, error) {
 	return m, nil
 }
 
+func (m *Maquina) revisarCadena(cadena string) error {
+	for _, letra := range cadena {
+		if !slices.Contains(m.Alfabeto, string(letra)) {
+			return fmt.Errorf("el simbolo %q no esta en el alfabeto de entrada", string(letra))
+		}
+	}
+	return nil
+}
+
 func revisarSimbolo(s string) error {
 	if utf8.RuneCountInString(s) != 1 {
 		return fmt.Errorf("el simbolo %q debe ser de un solo caracter", s)
