@@ -26,14 +26,25 @@ func main() {
 
 	mostrarMaquina(maquina)
 
-	fmt.Println("Cadenas a simular:")
 	for _, cadena := range conf.Cadenas {
+		fmt.Println()
+		fmt.Printf("--- Cadena: %s ---\n", cadena)
+
 		if err := maquina.revisarCadena(cadena); err != nil {
-			fmt.Printf("  %s: no se puede simular, %v\n", cadena, err)
+			fmt.Println("Resultado: RECHAZADA,", err)
 			continue
 		}
-		cinta := nuevaCinta(cadena)
-		fmt.Printf("  %s: %s\n", cadena, cinta.descripcion(maquina.Inicial, ""))
+
+		r := maquina.simular(cadena)
+		for i, d := range r.Descripciones {
+			fmt.Printf("%d: %s\n", i, d)
+		}
+		if r.Aceptada {
+			fmt.Println("Resultado: ACEPTADA,", r.Motivo)
+		} else {
+			fmt.Println("Resultado: RECHAZADA,", r.Motivo)
+		}
+		fmt.Println("Cinta final:", verSimbolo(r.Cinta))
 	}
 }
 
