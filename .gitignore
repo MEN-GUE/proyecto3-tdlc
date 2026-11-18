@@ -1,0 +1,9 @@
+# Ejecutables
+proyecto3-tdlc
+*.exe
+*.out
+
+# Claude
+.claude/
+CLAUDE.md
+CLAUDE.local.md
