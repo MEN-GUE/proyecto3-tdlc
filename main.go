@@ -18,25 +18,29 @@ func main() {
 		os.Exit(1)
 	}
 
-	mostrarConfiguracion(conf)
-}
-
-func mostrarConfiguracion(conf *Configuracion) {
-	fmt.Println("Estados:", strings.Join(conf.Estados.Lista, ", "))
-	fmt.Println("Estado inicial:", conf.Estados.Inicial)
-	fmt.Println("Estado final:", conf.Estados.Final)
-	fmt.Println("Alfabeto:", strings.Join(conf.Alfabeto, ", "))
-	fmt.Println("Alfabeto de la cinta:", strings.Join(conf.AlfabetoCinta, ", "))
-
-	fmt.Println("Transiciones:")
-	for _, t := range conf.Delta {
-		fmt.Printf("  delta([%s,%s], %s) = ([%s,%s], %s, %s)\n",
-			t.Entrada.Estado, verSimbolo(t.Entrada.Cache), verSimbolo(t.Entrada.Simbolo),
-			t.Salida.Estado, verSimbolo(t.Salida.Cache), verSimbolo(t.Salida.Simbolo), t.Salida.Mover)
+	maquina, err := construirMaquina(conf)
+	if err != nil {
+		fmt.Println("Error:", err)
+		os.Exit(1)
 	}
+
+	mostrarMaquina(maquina)
 
 	fmt.Println("Cadenas a simular:")
 	for _, c := range conf.Cadenas {
 		fmt.Println("  " + c)
+	}
+}
+
+func mostrarMaquina(m *Maquina) {
+	fmt.Println("Estados:", strings.Join(m.Estados, ", "))
+	fmt.Println("Estado inicial:", m.Inicial)
+	fmt.Println("Estado final:", m.Final)
+	fmt.Println("Alfabeto:", strings.Join(m.Alfabeto, ", "))
+	fmt.Println("Alfabeto de la cinta:", strings.Join(m.AlfabetoCinta, ", ")+", B")
+
+	fmt.Println("Transiciones:")
+	for _, c := range m.orden {
+		fmt.Printf("  delta(%s) = (%s)\n", c.texto(), m.Transiciones[c].texto())
 	}
 }
