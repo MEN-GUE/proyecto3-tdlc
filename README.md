@@ -2,6 +2,9 @@
 
 Proyecto 3 de Teoría de la Computación. El programa lee la descripción de una máquina de Turing de una cinta desde un archivo yaml, arma la máquina y simula cada cadena del archivo. Para cada cadena muestra todas las descripciones instantáneas, si fue aceptada o rechazada y cómo quedó la cinta al final.
 
+## Vídeo
+[https://youtu.be/YeydxQvdJlI](https://youtu.be/YeydxQvdJlI)
+
 ## Requisitos
 
 - Go 1.22 o más reciente.
